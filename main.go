@@ -1,5 +1,8 @@
 package main
 
+import "fmt"
+
 func main() {
-	GetModFile("test")
+	a := GetModFile("test")
+	fmt.Println(a)
 }

@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"regexp"
+)
 
 type Package struct {
 	name    string
@@ -14,12 +16,17 @@ type GoModFile struct {
 	indirectDependencies []Package
 }
 
+var goVersionRe = regexp.MustCompile(`go\s(1\.\d+\.?\d+)`)
+var moduleName = regexp.MustCompile(`module\s(.+)`)
+var directDependency = regexp.MustCompile(`require\s(.+)\s(.+)`)
+
 func parseGoModFile(file []byte) GoModFile {
-	fmt.Print(string(file))
+	gversion := goVersionRe.FindSubmatch(file)[1]
+	pkgName := moduleName.FindSubmatch(file)[1]
 
 	return GoModFile{
-		packagename: "test",
-		goversion:   "1.20",
+		packagename: string(pkgName),
+		goversion:   string(gversion),
 		directDependencies: []Package{
 			{
 				name:    "pkg",

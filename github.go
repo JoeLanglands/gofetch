@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -21,8 +20,6 @@ func GetModFile(url string) GoModFile {
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Println(string(body))
 
 	return parseGoModFile(body)
 }
